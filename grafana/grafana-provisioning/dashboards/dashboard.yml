@@ -1,0 +1,9 @@
+apiVersion: 1
+providers:
+- name: InfluxDB(GraphQL)
+  folder: 'FDN'
+  type: file
+  disableDeletion: false
+  editable: true
+  options:
+    path: /etc/grafana/provisioning/dashboards

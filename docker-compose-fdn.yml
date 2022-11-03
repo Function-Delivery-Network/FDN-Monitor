@@ -1,0 +1,52 @@
+version: '3.7'
+services:
+  fdn-monitor:
+    image: functiondeliverynetwork/fdn-monitor
+    build: monitor
+    env_file:
+      - config.env
+    ports:
+      - 3005:3005
+    depends_on:
+      - "influxdb"
+    volumes:
+      - ./Logs:/app/Logs
+  influxdb:
+    image: functiondeliverynetwork/influxdb:latest
+    build: influxdb
+    ports:
+      - '8086:8086'
+    volumes:
+      - influxdb-storage:/var/lib/influxdb
+    environment:
+      - DOCKER_INFLUXDB_INIT_MODE=setup
+      - DOCKER_INFLUXDB_INIT_USERNAME=${INFLUXDB_USERNAME}
+      - DOCKER_INFLUXDB_INIT_PASSWORD=${INFLUXDB_PASSWORD}
+      - DOCKER_INFLUXDB_INIT_ORG=${INFLUXDB_ORG}
+      - DOCKER_INFLUXDB_INIT_BUCKET=${INFLUXDB_BUCKET}
+      - DOCKER_INFLUXDB_INIT_ADMIN_TOKEN=${INFLUXDB_ADMIN_TOKEN}
+      - V1_DB_NAME=${V1_DB_NAME}
+      - V1_RP_NAME=${V1_RP_NAME}
+      - V1_AUTH_USERNAME=${V1_AUTH_USERNAME}
+      - V1_AUTH_PASSWORD=${V1_AUTH_PASSWORD}
+  grafana:
+    image: functiondeliverynetwork/grafana:latest
+    build: grafana
+    ports:
+      - '3001:3000'
+    volumes:
+      - grafana-storage:/var/lib/grafana
+    depends_on:
+      - influxdb
+    environment:
+      - GF_SECURITY_ADMIN_USER=${GRAFANA_USERNAME}
+      - GF_SECURITY_ADMIN_PASSWORD=${GRAFANA_PASSWORD}
+      - V1_DB_NAME=${V1_DB_NAME}
+      - V1_AUTH_USERNAME=${V1_AUTH_USERNAME}
+      - V1_AUTH_PASSWORD=${V1_AUTH_PASSWORD}
+      - DOCKER_INFLUXDB_INIT_ORG=${INFLUXDB_ORG}
+      - DOCKER_INFLUXDB_INIT_BUCKET=${INFLUXDB_BUCKET}
+      - DOCKER_INFLUXDB_INIT_ADMIN_TOKEN=${INFLUXDB_ADMIN_TOKEN}
+volumes:
+  influxdb-storage:
+  grafana-storage:

@@ -1,0 +1,17 @@
+google-cloud-monitoring
+aiohttp_requests
+boto3
+pandas
+python-decouple
+influxdb-client
+click
+colorama
+Flask
+itsdangerous
+Jinja2
+MarkupSafe
+Werkzeug
+gunicorn
+PyYAML==5.4.1
+requests
+minio
