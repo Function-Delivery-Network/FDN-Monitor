@@ -1,4 +1,4 @@
-# FDN-Monitor [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](https://github.com/Function-Delivery-Network/FDN-Monitor/blob/main/LICENSE)
+# FDN-Monitor [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://github.com/Function-Delivery-Network/FDN-Monitor/blob/main/LICENSE)
 
 FDN-Monitor is  a  client-based  python  tool  for  monitoring various serverless clusters deployed with serverless platforms. 
 It’s main objective isto  act  as  a  sidecar with every virtual-kubelet node in FDN to collect various metrics from the clusters. However, it can also be independently used without deploying it as part of FDN.
