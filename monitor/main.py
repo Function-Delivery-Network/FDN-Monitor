@@ -14,6 +14,7 @@ from datetime import datetime
 from PeriodicAsync import PeriodicAsyncThread
 from InfluxDBWriter import InfluxDBWriter
 import logging
+from logging.handlers import RotatingFileHandler
 import sys
 from minio import Minio
 import pandas as pd
@@ -21,16 +22,16 @@ import json
 pd.set_option('display.max_rows', None)
 pd.set_option('display.max_columns', None)
 pd.set_option('display.width', None)
-pd.set_option('display.max_colwidth', -1)
 
 logging.basicConfig(
     level=logging.DEBUG,
     format="%(asctime)s [%(levelname)s] %(message)s",
     handlers=[
-        logging.FileHandler("Logs/log.log"),
+        RotatingFileHandler("Logs/log.log", maxBytes=1e9, backupCount=2),
         logging.StreamHandler(sys.stdout)
     ]
 )
+
 logger = logging.getLogger(__name__)
 
 app = Flask(__name__)

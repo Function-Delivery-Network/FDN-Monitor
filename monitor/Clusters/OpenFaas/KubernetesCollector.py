@@ -1,12 +1,19 @@
 #!/usr/bin/env python
 from Clusters import BaseCollector
 import logging
+from logging.handlers import RotatingFileHandler
 import pandas as pd
 from pandas import DataFrame
 from .PrometheusCollector import PrometheusCollector
 from abc import abstractmethod
-logging.basicConfig(filename='Logs/log.log',
-                    format='%(message)s', filemode='w', level=logging.DEBUG)
+import sys
+
+logging.basicConfig(format='%(message)s', level=logging.DEBUG,
+                    handlers=[
+                        RotatingFileHandler("Logs/log.log", maxBytes=1e9, backupCount=2),
+                        logging.StreamHandler(sys.stdout)
+                        ]
+                    )
 logger = logging.getLogger(__name__)
 
 

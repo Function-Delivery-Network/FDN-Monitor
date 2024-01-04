@@ -6,6 +6,7 @@ from typing import List, Tuple
 import pandas as pd
 from pandas import DataFrame
 import logging
+from logging.handlers import RotatingFileHandler
 from .KubernetesCollector import KubernetesCollector
 from .PrometheusCollector import PrometheusCollector
 from Clusters import BaseCollector
@@ -13,8 +14,13 @@ import sys
 import os
 sys.path.append(os.path.abspath('../'))
 
-logging.basicConfig(filename='Logs/log.log',
-                    format='%(message)s', filemode='w', level=logging.DEBUG)
+logging.basicConfig(format='%(message)s', level=logging.DEBUG,
+                    handlers=[
+                        RotatingFileHandler("Logs/log.log", maxBytes=1e9, backupCount=2),
+                        logging.StreamHandler(sys.stdout)
+                        ]
+                    )
+
 logger = logging.getLogger(__name__)
 
 
